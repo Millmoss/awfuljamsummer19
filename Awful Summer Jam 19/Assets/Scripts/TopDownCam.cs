@@ -8,42 +8,53 @@ public class TopDownCam : MonoBehaviour
 
 	//public values
 	public Transform player = null;
-	public Transform camParent = null;
 	public Camera cam = null;
-	public Transform followParent = null;
-	public Transform follow = null;
+	public Transform camFocus = null;
 	public float rps = 120f;            //rotation per second
 	public float lerpSpeed = 0.5f;
+	public float lerpFollow = 0.3f;
 
 	//private values
-	private float yr = -1;				//y rotation of the camera
+	private float yr = -1;              //y rotation of the camera
+	private float yrLag = -1;
 	private float zoom = -1;			//distance from player
 
     void Start()
     {
-		Vector3 look = Quaternion.LookRotation(player.transform.position - cam.transform.position, Vector3.up).eulerAngles;
+		Vector3 look = Quaternion.LookRotation(player.position - cam.transform.position, Vector3.up).eulerAngles;
 		yr = look.y;
-		camParent.eulerAngles = new Vector3(0, yr, 0);
-		followParent.transform.eulerAngles = new Vector3(0, yr, 0);
-		cam.transform.eulerAngles = new Vector3(look.x, 0, 0);
-		follow.transform.eulerAngles = new Vector3(look.x, 0, 0);
+		yrLag = look.y;
+		cam.transform.eulerAngles = new Vector3(look.x, look.y, 0);
 
-		zoom = (cam.transform.position - player.transform.position).magnitude;
-		followParent.transform.position = camParent.transform.position;
+		zoom = (cam.transform.position - player.position).magnitude;
+		camFocus.position = player.position;
     }
 	
     void Update()
 	{
-		yr += rps * Time.deltaTime * Input.GetAxis("Mouse X");
+		float rotate = 0;
+		if (Input.GetButton("camera_rotate_left"))
+			rotate += 1;
+		if (Input.GetButton("camera_rotate_right"))
+			rotate -= 1;
+
+		yr += rps * Time.deltaTime * rotate;
 		if (yr > 180f)
+		{
 			yr -= 360f;
+			yrLag -= 360f;
+		}
 		if (yr < -180f)
+		{
 			yr += 360f;
+			yrLag += 360f;
+		}
 
-		camParent.transform.eulerAngles = new Vector3(0, yr, 0);
-		camParent.transform.position = player.position - camParent.transform.forward * zoom;
+		yrLag = Mathf.Lerp(yrLag, yr, lerpSpeed * Time.deltaTime * 60f);
 
-		//camParent.rotation = Quaternion.Slerp(camParent.rotation, follow.rotation, lerpSpeed * Time.deltaTime * 60f);
-		//camParent.position = Vector3.Lerp(camParent.position, follow.position, lerpSpeed * Time.deltaTime * 60f);
+		cam.transform.eulerAngles = new Vector3(cam.transform.eulerAngles.x, yrLag, 0);
+		cam.transform.position = camFocus.position - cam.transform.forward * zoom;
+
+		camFocus.position = Vector3.Lerp(camFocus.position, player.position, lerpFollow * Time.deltaTime * 60f);
 	}
 }
