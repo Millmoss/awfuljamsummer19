@@ -7,17 +7,20 @@ public class Player : MonoBehaviour
 	public Camera cam;
 	public float speed = 1;
 	public float accel = 0.7f;
+	public float rps = 360;				//degrees of player rotation allowed in a second
 	public float deadzone = 0.15f;
 	public LayerMask clickMask;
 	public float castDist = 20f;
 	public float slowDist = 0.5f;
 	public Rigidbody playerBody;
+	public Animator anim;
+	public GameObject mesh;
 
 	private Vector3 moveDirection = Vector3.zero;
 
     void Start()
     {
-        
+
     }
 	
     void Update()
@@ -35,6 +38,16 @@ public class Player : MonoBehaviour
 			moveDirection = Vector3.zero;
 		}
 
+		//if (moveDirection != Vector3.zero)
+		//mesh.transform.rotation = Quaternion.RotateTowards(mesh.transform.rotation, Quaternion.LookRotation(moveDirection, Vector3.up), rps * Time.deltaTime);
+		if (moveDirection != Vector3.zero)
+			mesh.transform.rotation = Quaternion.RotateTowards(mesh.transform.rotation, Quaternion.LookRotation(moveDirection, Vector3.up), rps * Time.deltaTime);
+
+		anim.SetFloat("Speed", playerBody.velocity.magnitude / speed);
+	}
+
+	void FixedUpdate()
+	{
 		playerBody.velocity = Vector3.Lerp(playerBody.velocity, moveDirection * speed, accel * Time.deltaTime * 60f);
 	}
 
