@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 	public Camera cam;
 	public float speed = 1;
 	public float accel = 0.7f;
-	public float rps = 360;				//degrees of player rotation allowed in a second
+	public float slerpVal = 0.9f;
 	public float deadzone = 0.15f;
 	public LayerMask clickMask;
 	public float castDist = 20f;
@@ -31,17 +31,15 @@ public class Player : MonoBehaviour
 		}
 		else if (Mathf.Abs(Input.GetAxis("x_move")) > deadzone || Mathf.Abs(Input.GetAxis("z_move")) > deadzone)
 		{
-			StickMove();
+			DirMove();
 		}
 		else
 		{
 			moveDirection = Vector3.zero;
 		}
 
-		//if (moveDirection != Vector3.zero)
-		//mesh.transform.rotation = Quaternion.RotateTowards(mesh.transform.rotation, Quaternion.LookRotation(moveDirection, Vector3.up), rps * Time.deltaTime);
 		if (moveDirection != Vector3.zero)
-			mesh.transform.rotation = Quaternion.RotateTowards(mesh.transform.rotation, Quaternion.LookRotation(moveDirection, Vector3.up), rps * Time.deltaTime);
+			mesh.transform.rotation = Quaternion.Slerp(mesh.transform.rotation, Quaternion.LookRotation(moveDirection, Vector3.up), slerpVal * Time.deltaTime * 60f);
 
 		anim.SetFloat("Speed", playerBody.velocity.magnitude / speed);
 	}
@@ -76,15 +74,22 @@ public class Player : MonoBehaviour
 		}
 	}
 
-	void StickMove()
+	void DirMove()
 	{
 		float x = Input.GetAxis("x_move");
-		if (x <= deadzone)
+		if (Mathf.Abs(x) <= deadzone)
 			x = 0;
 		float z = Input.GetAxis("z_move");
-		if (z <= deadzone)
+		if (Mathf.Abs(z) <= deadzone)
 			z = 0;
 
-		moveDirection = new Vector3(x, 0, z);	//direction needs to be changed to world coordinates
+		Vector3 forward = cam.transform.forward;
+		forward.y = 0;
+		forward.Normalize();
+		Vector3 right = cam.transform.right;
+		right.y = 0;
+		right.Normalize();
+
+		moveDirection = x * right + z * forward;
 	}
 }
