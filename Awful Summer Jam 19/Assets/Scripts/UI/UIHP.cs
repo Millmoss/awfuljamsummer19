@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 //Similar to UIBar, but we have an "impact" bar as bar.
 //bar_hp is what gets immediately changed first.
@@ -13,7 +11,8 @@ public class UIHP : UIBar
     //to find out rn tbh.
     public new void UpdateBar(int new_val)
     {
-        
+        if (moving)
+            moving = false;
         if (new_val < end_val)
         {
             SetBarSize(bar_hp, new_val);
