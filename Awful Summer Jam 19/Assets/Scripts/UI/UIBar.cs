@@ -4,15 +4,18 @@ public class UIBar : MonoBehaviour
 {
     public Transform bar;
     public int max_val = 100;
-    public float rate = 100f;
+    //Rate should be multiples of max_val;
+    protected float rate = 100f;
     protected float end_val;
     protected float cur_val;
     protected bool moving = false;
 
-    private void Start()
+    public void Restart(int val)
     {
-        cur_val = max_val;
-        end_val = max_val;
+        cur_val = val;
+        end_val = val;
+        max_val = val;
+        rate = val;
     }
 
     public void UpdateBar(int new_val)
@@ -24,14 +27,6 @@ public class UIBar : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            UpdateBar(1);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            UpdateBar(99);
-        }
         if (moving)
         {
             if (cur_val == end_val)

@@ -2,7 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class Inventory : MonoBehaviour
 {
-    public GameObject item_slots;
+    public UIItem[] item_slots;
+    private int cur_empty_slot = 0;
+
+    public void AddItem()
+    {
+        item_slots[cur_empty_slot].icon.sprite = AllItems.Instance.items[0].img;
+    }
+
+    private void Start()
+    {
+        AddItem();
+    }
 }
