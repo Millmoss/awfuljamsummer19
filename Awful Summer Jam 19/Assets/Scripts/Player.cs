@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
 	public GameObject mesh;
 
 	private Vector3 moveDirection = Vector3.zero;
+	private Vector3 moveVelocity = Vector3.zero;
+	private bool decellerate = false;
 
     void Start()
     {
@@ -41,12 +43,37 @@ public class Player : MonoBehaviour
 		if (moveDirection != Vector3.zero)
 			mesh.transform.rotation = Quaternion.Slerp(mesh.transform.rotation, Quaternion.LookRotation(moveDirection, Vector3.up), slerpVal * Time.deltaTime * 60f);
 
-		anim.SetFloat("Speed", playerBody.velocity.magnitude / speed);
+		anim.SetFloat("Speed", moveVelocity.magnitude / speed);
+
+		if (!decellerate)
+		moveVelocity = Vector3.Lerp(moveVelocity, moveDirection * speed, accel * Time.deltaTime * 60f);
+
+		transform.position += moveVelocity * Time.deltaTime;
+
+		Ray floorRay = new Ray(transform.position, Vector3.down);
+		RaycastHit h;
+		bool success = Physics.Raycast(floorRay, out h, 2f, 10);
+
+		if (success)
+		{
+			transform.position = h.point;
+
+			floorRay = new Ray(transform.position + moveVelocity * 0.5f, Vector3.down);
+			success = Physics.Raycast(floorRay, out h, 2f, 10);
+			if (success)
+			{
+				decellerate = false;
+			}
+			else
+			{
+				decellerate = true;
+			}
+		}
 	}
 
 	void FixedUpdate()
 	{
-		playerBody.velocity = Vector3.Lerp(playerBody.velocity, moveDirection * speed, accel * Time.deltaTime * 60f);
+		//playerBody.velocity = Vector3.Lerp(playerBody.velocity, moveDirection * speed, accel * Time.deltaTime * 60f);
 	}
 
 	void ClickMove()
