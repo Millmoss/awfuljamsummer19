@@ -532,7 +532,7 @@ MonoBehaviour:
   p: {fileID: 0}
   maxWanderTime: 4
   wanderDistance: 3
-  aggroDist: 3
+  aggroDist: 5.5
 --- !u!1 &399144161
 GameObject:
   m_ObjectHideFlags: 0
