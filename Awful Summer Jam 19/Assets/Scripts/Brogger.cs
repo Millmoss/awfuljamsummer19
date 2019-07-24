@@ -14,6 +14,7 @@ public class Brogger : MonoBehaviour
     public float maxWanderTime;
     public float wanderDistance;
     public float aggroDist;
+    public Animator anim;
 
     // Start is called before the first frame update
     void Start() {
@@ -69,7 +70,11 @@ public class Brogger : MonoBehaviour
             // If too close, make a new one with random changes to x and z.
 
             // When moving, we don't want to be as urgent as if chasing the player.
-            currentSpeed = Mathf.Lerp(currentSpeed, movementSpeed / 3, movementSpeed / 3 * Time.deltaTime);
+            if(Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(waypoint.x, waypoint.z)) > 0.1f) {
+                currentSpeed = Mathf.Lerp(currentSpeed, movementSpeed / 3, movementSpeed / 3 * Time.deltaTime);
+            } else {
+                currentSpeed = Mathf.Lerp(currentSpeed, 0, movementSpeed / 3 * Time.deltaTime);
+            }
         } else if(state == "AGGRO") {
             waypoint = p.transform.position;
             currentSpeed = Mathf.Lerp(currentSpeed, movementSpeed, movementSpeed * Time.deltaTime);
@@ -82,6 +87,18 @@ public class Brogger : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, waypoint, currentSpeed * Time.deltaTime);
         }
 
+        // Always tell it how fast to be goin
+        anim.SetFloat("Speed", currentSpeed / movementSpeed);
+        // Debug.Log(currentSpeed / movementSpeed);
+
+    }
+
+    private void FixedUpdate()
+    {
+        if(state == "AGGRO")
+        {
+            // transform.eulerAngles = new Vector3(transform.eulerAngles.x, Mathf.MoveTowardsAngle(transform.eulerAngles.y, ))
+        }
     }
 
     // Create a new spot for the Brog to go to.
