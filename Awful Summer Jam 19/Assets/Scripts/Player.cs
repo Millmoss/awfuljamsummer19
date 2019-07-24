@@ -13,18 +13,27 @@ public class Player : MonoBehaviour
 	public float castDist = 20f;
 	public float slowDist = 0.5f;
 	public Rigidbody playerBody;
-	public Animator anim;
 	public GameObject mesh;
 
-	private Vector3 moveDirection = Vector3.zero;
+    //For animations.
+    public Animator anim;
+    private enum attack_style { stab, cut};
+    private attack_style attackStyle;
+
+    private Vector3 moveDirection = Vector3.zero;
 
     void Start()
     {
-
+        attackStyle = attack_style.stab;
     }
 	
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            ClickAttack();
+        }
+
 		if (Input.GetKey(KeyCode.Mouse0))
 		{
 			ClickMove();
@@ -48,6 +57,12 @@ public class Player : MonoBehaviour
 	{
 		playerBody.velocity = Vector3.Lerp(playerBody.velocity, moveDirection * speed, accel * Time.deltaTime * 60f);
 	}
+
+    void ClickAttack()
+    {
+        anim.SetTrigger("Attack_Cut");
+    }
+    
 
 	void ClickMove()
 	{

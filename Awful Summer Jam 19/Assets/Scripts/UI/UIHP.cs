@@ -26,7 +26,7 @@ public class UIHP : UIBar
             StartDecay();
         }
         end_val = new_val;
-        
+
     }
     
     private void StartDecay()
@@ -38,27 +38,30 @@ public class UIHP : UIBar
     {
         if (moving)
         {
-            if (Mathf.Abs(cur_val - end_val) < 0.1 )
-            { 
-                moving = false;
-                cur_val = end_val;
+            if (!decreasing)
+            {
+                cur_val += rate * Time.deltaTime;
+                if (end_val - cur_val < 0)
+                {
+                    moving = false;
+                    cur_val = end_val;
+                    SetBarSize(bar, cur_val);
+                }
+                SetBarSize(bar_hp, cur_val);
                 SetBarSize(bar, cur_val);
             }
             else
             {
-                if (!decreasing)
+                cur_val -= rate * Time.deltaTime;
+                if (cur_val < end_val)
                 {
-                    cur_val += rate * Time.deltaTime;
-                    SetBarSize(bar_hp, cur_val);
+                    moving = false;
+                    cur_val = end_val;
                     SetBarSize(bar, cur_val);
                 }
-                else
-                {
-                    cur_val -= rate * Time.deltaTime;
-                    print(cur_val);
-                    SetBarSize(bar, cur_val);
-                }
+                SetBarSize(bar, cur_val);
             }
+            
         }
     }
 }

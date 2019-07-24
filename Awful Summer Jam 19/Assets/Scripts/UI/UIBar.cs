@@ -5,7 +5,7 @@ public class UIBar : MonoBehaviour
     public Transform bar;
     public int max_val = 100;
     //Rate should be multiples of max_val;
-    protected float rate = 100f;
+    public float rate = 100f;
     protected float end_val;
     protected float cur_val;
     protected bool moving = false;
@@ -45,7 +45,10 @@ public class UIBar : MonoBehaviour
     //Takes in the transform, and the wanted value.
     protected void SetBarSize(Transform b, float val)
     {
-        b.localScale = new Vector3( (val / max_val), 
+        float tot = (val / max_val);
+        if (tot < 0)
+            tot = 0;
+        b.localScale = new Vector3( tot, 
             b.localScale.y, 
             b.localScale.z);
     }

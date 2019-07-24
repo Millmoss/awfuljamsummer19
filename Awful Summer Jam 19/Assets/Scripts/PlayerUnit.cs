@@ -39,12 +39,12 @@ public class PlayerUnit : Unit
     { 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            AddHp(1);
+            AddHp(35);
             print(hp);
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            AddHp(-1);
+            AddHp(-35);
             print(hp);
         }
     }
