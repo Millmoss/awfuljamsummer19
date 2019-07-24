@@ -15,7 +15,32 @@ ModelImporter:
   - first:
       74: 1473664779095469666
     second: Skeleton|Run
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Man
+    second: {fileID: 2100000, guid: 1a74dd7ca03011e4b9ced5cdfb9f8dc0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pants
+    second: {fileID: 2100000, guid: 50e326fa8557f4247b1fb5f01f5df57f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pommel
+    second: {fileID: 2100000, guid: ba10f10b96bd7804c9865d94be7594d6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shirt
+    second: {fileID: 2100000, guid: f069587fd208a7446ad8a82a148f8ca8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood
+    second: {fileID: 2100000, guid: 1a8aa3be7ebeda14da433d70e3cef240, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

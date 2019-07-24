@@ -34,9 +34,9 @@ public class TopDownCam : MonoBehaviour
 	{
 		float rotate = 0;
 		if (Input.GetButton("camera_rotate_left"))
-			rotate += 1;
-		if (Input.GetButton("camera_rotate_right"))
 			rotate -= 1;
+		if (Input.GetButton("camera_rotate_right"))
+			rotate += 1;
 
 		yr += rps * Time.deltaTime * rotate;
 		if (yr > 180f)

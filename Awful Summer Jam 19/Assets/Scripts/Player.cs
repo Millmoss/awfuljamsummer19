@@ -9,20 +9,23 @@ public class Player : MonoBehaviour
 	public float accel = 0.7f;
 	public float slerpVal = 0.9f;
 	public float deadzone = 0.15f;
+	public LayerMask collisionMask;
 	public LayerMask clickMask;
 	public float castDist = 20f;
 	public float slowDist = 0.5f;
 	public Rigidbody playerBody;
 	public Animator anim;
 	public GameObject mesh;
+	public float characterRadius;
 
 	private Vector3 moveDirection = Vector3.zero;
 	private Vector3 moveVelocity = Vector3.zero;
-	private bool decellerate = false;
+	private bool decelerate = false;
+	private Collider[] playerColliders;
 
     void Start()
     {
-
+		playerColliders = GetComponents<Collider>();
     }
 	
     void Update()
@@ -45,35 +48,89 @@ public class Player : MonoBehaviour
 
 		anim.SetFloat("Speed", moveVelocity.magnitude / speed);
 
-		if (!decellerate)
-		moveVelocity = Vector3.Lerp(moveVelocity, moveDirection * speed, accel * Time.deltaTime * 60f);
+		if (!decelerate)
+			moveVelocity = Vector3.Lerp(moveVelocity, moveDirection * speed, accel * Time.deltaTime * 60f);
+		else
+			moveVelocity = Vector3.Lerp(moveVelocity, Vector3.zero, accel * Time.deltaTime * 60f / 5f);
 
 		transform.position += moveVelocity * Time.deltaTime;
 
+		ToggleColliders(false);
+
 		Ray floorRay = new Ray(transform.position, Vector3.down);
 		RaycastHit h;
-		bool success = Physics.Raycast(floorRay, out h, 2f, 10);
+		bool success = Physics.Raycast(floorRay, out h, 2f, collisionMask);
 
 		if (success)
 		{
-			transform.position = h.point;
+			transform.position = h.point + Vector3.up;
 
-			floorRay = new Ray(transform.position + moveVelocity * 0.5f, Vector3.down);
-			success = Physics.Raycast(floorRay, out h, 2f, 10);
+			floorRay = new Ray(transform.position + moveDirection * speed * 0.5f, Vector3.down);
+			success = Physics.Raycast(floorRay, out h, 2f, collisionMask);
 			if (success)
 			{
-				decellerate = false;
+				decelerate = false;
 			}
-			else
+			else if ((h.point - transform.position).magnitude < 1f)
 			{
-				decellerate = true;
+				decelerate = true;
 			}
 		}
+
+		/*
+		Ray collisionRay = new Ray(transform.position, Vector3.down);
+		success = Physics.SphereCast(transform.position - moveDirection * 1f, characterRadius, moveDirection, out h, speed, collisionMask);
+
+		if (success && (h.point - transform.position).magnitude < 1.5f)
+		{
+			decelerate = true;
+		}
+		else
+		{
+			decelerate = false;
+		}*/
+
+		ToggleColliders(true);
 	}
 
 	void FixedUpdate()
 	{
-		//playerBody.velocity = Vector3.Lerp(playerBody.velocity, moveDirection * speed, accel * Time.deltaTime * 60f);
+		ToggleColliders(false);
+
+		Ray floorRay = new Ray(transform.position, Vector3.down);
+		RaycastHit h;
+		bool success = Physics.Raycast(floorRay, out h, 2f, collisionMask);
+
+		if (success)
+		{
+			transform.position = h.point + Vector3.up;
+
+			floorRay = new Ray(transform.position + moveDirection * speed * 0.5f, Vector3.down);
+			success = Physics.Raycast(floorRay, out h, 2f, collisionMask);
+			if (success)
+			{
+				decelerate = false;
+			}
+			else if ((h.point - transform.position).magnitude < 1f)
+			{
+				decelerate = true;
+			}
+		}
+
+		/*
+		Ray collisionRay = new Ray(transform.position, Vector3.down);
+		success = Physics.SphereCast(transform.position - moveDirection * 1f, characterRadius, moveDirection, out h, speed, collisionMask);
+
+		if (success && (h.point - transform.position).magnitude < 1.5f)
+		{
+			decelerate = true;
+		}
+		else
+		{
+			decelerate = false;
+		}*/
+
+		ToggleColliders(true);
 	}
 
 	void ClickMove()
@@ -81,8 +138,6 @@ public class Player : MonoBehaviour
 		Ray click = cam.ScreenPointToRay(Input.mousePosition);
 		RaycastHit h;
 		bool success = Physics.Raycast(click, out h, castDist, clickMask);
-
-		print(h.point);
 
 		if (!success)
 		{
@@ -118,5 +173,13 @@ public class Player : MonoBehaviour
 		right.Normalize();
 
 		moveDirection = x * right + z * forward;
+	}
+
+	void ToggleColliders(bool toggle)
+	{
+		for (int i = 0; i < playerColliders.Length; i++)
+		{
+			playerColliders[i].enabled = toggle;
+		}
 	}
 }
