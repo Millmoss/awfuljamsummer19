@@ -5,13 +5,20 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     public int atk, def, hp, mana;
-    protected int max_hp, max_mana;
-    public int cur_wep_atk;
+    protected int max_hp;
+
+    public UIHP hp_bar;
+
+    public void Start()
+    {
+        hp_bar.Restart(hp);
+        max_hp = hp;
+    }
 
     //Return the calculated attack value
     public int GetAttack()
     {
-        return cur_wep_atk + atk;
+        return atk;
     }
 
     //Use this and private the AddHp / AddMana functions.
@@ -30,14 +37,7 @@ public class Unit : MonoBehaviour
             hp = max_hp;
         if (hp < 0)
             hp = 0;
+        hp_bar.UpdateBar(hp);
     }
 
-    public void AddMana(int val)
-    {
-        mana += val;
-        if (mana > max_mana)
-            mana = max_mana;
-        if (mana < 0)
-            mana = 0;
-    }
 }

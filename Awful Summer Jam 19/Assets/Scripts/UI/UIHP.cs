@@ -6,7 +6,6 @@ public class UIHP : UIBar
 {
     public Transform bar_hp;
     public float time_before_decrease;
-    private bool decreasing = false;
 
     //Apparently method hiding is a bad idea? IDK if protected works here, too lazy
     //to find out rn tbh.
@@ -36,6 +35,11 @@ public class UIHP : UIBar
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.X))
+            UpdateBar(35);
+        if (Input.GetKeyDown(KeyCode.Z))
+            UpdateBar(65);
+        print(cur_val);
         if (moving)
         {
             if (!decreasing)
@@ -46,6 +50,7 @@ public class UIHP : UIBar
                     moving = false;
                     cur_val = end_val;
                     SetBarSize(bar, cur_val);
+                    return;
                 }
                 SetBarSize(bar_hp, cur_val);
                 SetBarSize(bar, cur_val);
@@ -58,6 +63,7 @@ public class UIHP : UIBar
                     moving = false;
                     cur_val = end_val;
                     SetBarSize(bar, cur_val);
+                    return;
                 }
                 SetBarSize(bar, cur_val);
             }

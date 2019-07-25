@@ -5,11 +5,13 @@ public class UIBar : MonoBehaviour
     public Transform bar;
     public int max_val = 100;
     //Rate should be multiples of max_val;
-    public float rate = 100f;
+    protected float rate = 100f;
     protected float end_val;
     protected float cur_val;
     protected bool moving = false;
+    protected bool decreasing = false;
 
+    //This should also be start...
     public void Restart(int val)
     {
         cur_val = val;
@@ -20,6 +22,10 @@ public class UIBar : MonoBehaviour
 
     public void UpdateBar(int new_val)
     {
+        if (new_val < end_val)
+            decreasing = true;
+        else
+            decreasing = false;
         end_val = new_val;
         if (!moving)
             moving = true;
@@ -27,18 +33,36 @@ public class UIBar : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.O))
+            UpdateBar((int)end_val - 35);
+        if (Input.GetKeyDown(KeyCode.P))
+            UpdateBar((int)end_val + 35);
         if (moving)
         {
-            if (cur_val == end_val)
-                moving = false;
-            else
+
+            if (!decreasing)
             {
-                if (cur_val < end_val)
-                    cur_val += rate * Time.deltaTime;
-                else
-                    cur_val -= rate * Time.deltaTime;
+                cur_val += rate * Time.deltaTime;
+                if (end_val - cur_val < 0)
+                {
+                    moving = false;
+                    cur_val = end_val;
+                    SetBarSize(bar, cur_val);
+                }
                 SetBarSize(bar, cur_val);
             }
+            else
+            {
+                cur_val -= rate * Time.deltaTime;
+                if (cur_val < end_val)
+                {
+                    moving = false;
+                    cur_val = end_val;
+                    SetBarSize(bar, cur_val);
+                }
+                SetBarSize(bar, cur_val);
+            }
+
         }
     }
 
