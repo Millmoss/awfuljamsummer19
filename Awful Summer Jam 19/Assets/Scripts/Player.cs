@@ -5,35 +5,23 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 	public Camera cam;
-	public float speed = 1;
-	public float accel = 0.7f;
-	public float slerpVal = 0.9f;
 	public float deadzone = 0.15f;
 	public LayerMask clickMask;
 	public float castDist = 20f;
 	public float slowDist = 0.5f;
-	public Rigidbody playerBody;
-	public GameObject mesh;
+	public Animator anim;
+	public GameObject playerPhysics;
 
-    //For animations.
-    public Animator anim;
-    private enum attack_style { stab, cut};
-    private attack_style attackStyle;
-
-    private Vector3 moveDirection = Vector3.zero;
+	private Vector3 moveDirection = Vector3.zero;
+	private Collisions playerCollisions;
 
     void Start()
     {
-        attackStyle = attack_style.stab;
+		playerCollisions = playerPhysics.GetComponent<Collisions>();
     }
 	
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            ClickAttack();
-        }
-
 		if (Input.GetKey(KeyCode.Mouse0))
 		{
 			ClickMove();
@@ -47,30 +35,25 @@ public class Player : MonoBehaviour
 			moveDirection = Vector3.zero;
 		}
 
-		if (moveDirection != Vector3.zero)
-			mesh.transform.rotation = Quaternion.Slerp(mesh.transform.rotation, Quaternion.LookRotation(moveDirection, Vector3.up), slerpVal * Time.deltaTime * 60f);
+		float spd = playerCollisions.GetSpeed();
+		if (spd < .25f)
+			spd = 0;
+		anim.SetFloat("Speed", spd, 0.05f, Time.deltaTime);
 
-		anim.SetFloat("Speed", playerBody.velocity.magnitude / speed);
+		transform.position = Vector3.Lerp(transform.position, playerPhysics.transform.position, 0.5f * Time.deltaTime * 60);
+		transform.rotation = Quaternion.Slerp(transform.rotation, playerPhysics.transform.rotation, 0.5f * Time.deltaTime * 60);
 	}
 
 	void FixedUpdate()
 	{
-		playerBody.velocity = Vector3.Lerp(playerBody.velocity, moveDirection * speed, accel * Time.deltaTime * 60f);
+		playerCollisions.SetDirection(moveDirection);
 	}
-
-    void ClickAttack()
-    {
-        anim.SetTrigger("Attack_Cut");
-    }
-    
 
 	void ClickMove()
 	{
 		Ray click = cam.ScreenPointToRay(Input.mousePosition);
 		RaycastHit h;
 		bool success = Physics.Raycast(click, out h, castDist, clickMask);
-
-		print(h.point);
 
 		if (!success)
 		{
