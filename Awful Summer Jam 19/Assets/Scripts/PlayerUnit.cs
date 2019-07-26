@@ -6,6 +6,7 @@ public class PlayerUnit : Unit
 {
     public UIBar mana_bar;
     public int cur_wep_atk, max_mana;
+	public itemtype selectedItem = itemtype.sword;
 
     //if hp is 0, don't let it be 0 please.
     private new void Start()
@@ -43,3 +44,5 @@ public class PlayerUnit : Unit
         }
     }
 }
+
+public enum itemtype { sword, dagger, torch, none }
