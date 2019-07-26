@@ -2,21 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Hi, I'm a singleton. I highlander all copies of me.
 public class AllItems : MonoBehaviour
 {
     private static AllItems instance = null;
 
     public Dictionary<int, Item> items;
     public Sprite[] sprites;
+    public Sprite[] weapons;
 
     public void InstantiateValues()
     {
         items = new Dictionary<int, Item>();
+        Item tmp;
         for (int i = 0; i < sprites.Length; i++)
-        { 
-            Item tmp = new Item(sprites[i]);
+        {
+            tmp = new Item(sprites[i], i.ToString());
             items[i] = tmp;
         }
+        tmp = new Item_Weapon(weapons[0], "Sword", WeaponTypeEnum.WeaponType.cut);
     }
 
     public static AllItems Instance

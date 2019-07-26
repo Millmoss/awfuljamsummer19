@@ -5,7 +5,8 @@ using UnityEngine;
 public class Item
 {
     public Sprite img;
-    public Item(Sprite s)
+    public string name;
+    public Item(Sprite s, string nam)
     {
         img = s;
     }

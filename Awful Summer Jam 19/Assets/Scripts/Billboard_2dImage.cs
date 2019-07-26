@@ -7,6 +7,6 @@ public class Billboard_2dImage : MonoBehaviour
     public Camera cam;
     private void Update()
     {
-        transform.LookAt(cam.transform);
+            transform.LookAt(cam.transform);
     }
 }

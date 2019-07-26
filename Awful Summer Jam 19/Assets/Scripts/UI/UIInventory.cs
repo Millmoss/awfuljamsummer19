@@ -7,13 +7,9 @@ public class Inventory : MonoBehaviour
     public UIItem[] item_slots;
     private int cur_empty_slot = 0;
 
-    public void AddItem()
+    public void AddItem(Item i)
     {
-        item_slots[cur_empty_slot].icon.sprite = AllItems.Instance.items[0].img;
+        item_slots[cur_empty_slot].icon.sprite = i.img;
     }
-
-    private void Start()
-    {
-        AddItem();
-    }
+    
 }
