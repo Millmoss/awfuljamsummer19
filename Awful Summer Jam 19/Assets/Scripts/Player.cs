@@ -42,6 +42,10 @@ public class Player : MonoBehaviour
 
 		transform.position = Vector3.Lerp(transform.position, playerPhysics.transform.position, 0.5f * Time.deltaTime * 60);
 		transform.rotation = Quaternion.Slerp(transform.rotation, playerPhysics.transform.rotation, 0.5f * Time.deltaTime * 60);
+
+		//HERE
+		//
+		anim.SetTrigger("Attack_Cut");
 	}
 
 	void FixedUpdate()
