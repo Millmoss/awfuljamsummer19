@@ -35,11 +35,6 @@ public class UIHP : UIBar
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X))
-            UpdateBar(35);
-        if (Input.GetKeyDown(KeyCode.Z))
-            UpdateBar(65);
-        print(cur_val);
         if (moving)
         {
             if (!decreasing)

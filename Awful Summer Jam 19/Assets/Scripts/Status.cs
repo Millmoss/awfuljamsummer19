@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponTypeEnum
-{ 
-    public enum WeaponType { stab, cut};
+public class Status
+{
+
 }

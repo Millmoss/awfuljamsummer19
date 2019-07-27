@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Item_Weapon : Item
 {
-    public WeaponTypeEnum.WeaponType type { get; set; }
-    public Item_Weapon(Sprite s, string nam, WeaponTypeEnum.WeaponType t) : 
-        base(s, nam)
+    public ItemTypeEnums.values item_type { get; set; }
+    public Item_Weapon(Sprite s, string nam, ItemTypeEnums.values t) : 
+        base(s, nam, t)
     {
         type = t;
     }

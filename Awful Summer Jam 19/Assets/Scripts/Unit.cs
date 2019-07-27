@@ -8,8 +8,9 @@ public class Unit : MonoBehaviour
     protected int max_hp;
     
     public UIHP hp_bar;
-    public UIStatus ui_status;
+    public UIStatus[] ui_status;
     protected UnitStatusEnums.UnitStatus status;
+    public Status[] statuses;
 
     public void Start()
     {
@@ -20,7 +21,7 @@ public class Unit : MonoBehaviour
     public void SetStatus(UnitStatusEnums.UnitStatus st)
     {
         status = st;
-        ui_status.UpdateStatus(st);
+        //fix later ui_status.UpdateStatus(st);
         if (st == UnitStatusEnums.UnitStatus.poisoned)
             InvokeRepeating("TickPoison", 1, 1);
         else

@@ -15,12 +15,24 @@ public class AllItems : MonoBehaviour
     {
         items = new Dictionary<int, Item>();
         Item tmp;
+        tmp = new Armor(sprites[0], "head", ItemTypeEnums.values.head, 1);
+        items[0] = tmp;
+        tmp = new Armor(sprites[1], "ar", ItemTypeEnums.values.arms, 2);
+        items[1] = tmp;
+        tmp = new Armor(sprites[2], "lweg", ItemTypeEnums.values.legs, 3);
+        items[2] = tmp;
+        tmp = new Armor(sprites[3], "che", ItemTypeEnums.values.chest,4);
+        items[3] = tmp;
+        tmp = new Armor(sprites[4], "boot", ItemTypeEnums.values.boots,5);
+        items[4] = tmp;
+        /*
         for (int i = 0; i < sprites.Length; i++)
         {
-            tmp = new Item(sprites[i], i.ToString());
+            tmp = new Item(sprites[i], i.ToString(),ItemTypeEnums.values.arms);
             items[i] = tmp;
         }
-        tmp = new Item_Weapon(weapons[0], "Sword", WeaponTypeEnum.WeaponType.cut);
+        tmp = new Item_Weapon(weapons[0], "Sword", ItemTypeEnums.values.cut);
+        */
     }
 
     public static AllItems Instance

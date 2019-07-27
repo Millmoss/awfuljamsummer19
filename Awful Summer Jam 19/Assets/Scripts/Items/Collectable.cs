@@ -6,7 +6,7 @@ public class Collectable : MonoBehaviour
 {
     public Inventory iv;
     public Item it;
-
+    
     private void Start()
     {
         it = AllItems.Instance.items[1];

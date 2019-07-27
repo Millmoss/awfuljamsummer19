@@ -6,8 +6,13 @@ public class Item
 {
     public Sprite img;
     public string name;
-    public Item(Sprite s, string nam)
+    public ItemTypeEnums.values type;
+
+    public Item(Sprite s, string nam, ItemTypeEnums.values _type)
     {
         img = s;
+        type = _type;
+        name = nam;
     }
+    
 }

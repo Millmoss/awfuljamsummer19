@@ -33,10 +33,6 @@ public class UIBar : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O))
-            UpdateBar((int)end_val - 35);
-        if (Input.GetKeyDown(KeyCode.P))
-            UpdateBar((int)end_val + 35);
         if (moving)
         {
 
