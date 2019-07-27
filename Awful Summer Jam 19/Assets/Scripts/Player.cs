@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
 	public float slowDist = 0.5f;
 	public Animator anim;
 	public GameObject playerPhysics;
+	public PlayerUnit pu;
 
 	private Vector3 moveDirection = Vector3.zero;
 	private Collisions playerCollisions;
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour
     void Start()
     {
 		playerCollisions = playerPhysics.GetComponent<Collisions>();
+		pu = GetComponent<PlayerUnit>();
     }
 	
     void Update()
@@ -33,6 +35,29 @@ public class Player : MonoBehaviour
 		else
 		{
 			moveDirection = Vector3.zero;
+		}
+
+		if (Input.GetKeyDown(KeyCode.Mouse1))
+		{
+			if (pu.selectedItem == itemtype.sword)
+			{
+				anim.SetTrigger("Attack_Cut");
+			}
+			else if (pu.selectedItem == itemtype.dagger)
+			{
+				anim.SetTrigger("Attack_Stab");
+			}
+		}
+		if (Input.GetKey(KeyCode.Mouse1))
+		{
+			if (pu.selectedItem == itemtype.torch)
+			{
+				anim.SetFloat("TorchOut", 1);
+			}
+		}
+		else if (pu.selectedItem == itemtype.torch)
+		{
+			anim.SetFloat("TorchOut", 0);
 		}
 
 		float spd = playerCollisions.GetSpeed();

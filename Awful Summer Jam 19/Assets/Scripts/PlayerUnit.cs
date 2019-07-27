@@ -10,6 +10,9 @@ public class PlayerUnit : Unit
     public int cur_wep_atk, max_mana;
     private Dictionary<ItemTypeEnums.values, Armor> equips;
 
+    public enum itemtype { sword, dagger, torch, none }
+    public itemtype selectedItem = itemtype.sword;
+
     //if hp is 0, don't let it be 0 please.
     private new void Start()
     {
