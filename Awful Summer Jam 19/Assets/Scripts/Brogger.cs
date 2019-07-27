@@ -37,7 +37,7 @@ public class Brogger : MonoBehaviour
 
         // If near/can see a player, switch into "AGGRO".
         float distance = Vector3.Distance(p.transform.position, transform.position);
-        if (distance < aggroDist && state != "AGGRO" && state != "ORIENTATION") {
+        if (distance < aggroDist && state != "AGGRO" && state != "ORIENTATION" && state != "ATTACK") {
             state = "ORIENTATION";
             wanderTime = 0;
         } else if (distance > aggroDist * 1.3f && state == "AGGRO") { // This factor will likely need to change.
@@ -47,16 +47,13 @@ public class Brogger : MonoBehaviour
         }
 
         // Get ready for some shit
-        if (state == "ORIENTATION")
-        {
+        if (state == "ORIENTATION") {
             waypoint = p.transform.position;
             wanderTime = wanderTime + Time.deltaTime;
-            if (wanderTime < spinTime)
-            {
+            if (wanderTime < spinTime) {
                 transform.GetComponent<Rigidbody>().MoveRotation(Quaternion.Euler(new Vector3(0, transform.eulerAngles.y + wanderTime * wanderTime * 500, 0)));
             }
-            else
-            {
+            else {
                 Debug.Log(".");
                 // Okay, so get the look rotation toward the player, but then only use the Y component.
                 transform.GetComponent<Rigidbody>().MoveRotation(Quaternion.Euler(new Vector3(0, Quaternion.LookRotation(waypoint - transform.position, Vector3.up).eulerAngles.y, 0)));
@@ -97,24 +94,41 @@ public class Brogger : MonoBehaviour
             intention = Quaternion.Euler(new Vector3(0, intention.eulerAngles.y, 0));
             // Quaternion.LookRotation(player.position - cam.transform.position, Vector3.up).eulerAngles;
             Debug.Log(Quaternion.LookRotation(transform.forward, Vector3.up).eulerAngles.y - intention.eulerAngles.y);
-            if (Mathf.Abs(Quaternion.LookRotation(transform.forward, Vector3.up).eulerAngles.y - intention.eulerAngles.y) > 30 && wanderTime > 0.1f)
-            {
+            if (Mathf.Abs(Quaternion.LookRotation(transform.forward, Vector3.up).eulerAngles.y - intention.eulerAngles.y) > 30 && wanderTime > 0.1f) {
                 state = "ORIENTATION";
                 wanderTime = 0;
             }
 
+            // ==============================================================================================================================
+            // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+            
             // If close enough, queue up an attack???
+            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(waypoint.x, waypoint.z)) < 1) {
+                state = "ATTACK";
+                wanderTime = 0;
+                anim.Play("Bite");
+            }
+
+            // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            // ==============================================================================================================================
         }
         // Also important - leave room for an idle state to exist.
-        if (state == "IDLE")
-        {
+        if (state == "IDLE") {
             // Debug.Log("!");
             wanderTime = wanderTime + Time.deltaTime / 2;
             currentSpeed = Mathf.Lerp(currentSpeed, 0, movementSpeed / 3 * Time.deltaTime);
-            if (wanderTime > maxWanderTime)
-            {
+            if (wanderTime > maxWanderTime) {
                 state = "WANDER";
                 NewWaypoint();
+                wanderTime = 0;
+            }
+        }
+
+        if (state == "ATTACK") {
+            // Attack time should be constant probably.
+            wanderTime = wanderTime + Time.deltaTime;
+            if(wanderTime > 1) {
+                state = "AGGRO";
                 wanderTime = 0;
             }
         }
