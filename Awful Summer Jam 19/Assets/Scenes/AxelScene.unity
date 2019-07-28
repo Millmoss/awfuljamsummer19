@@ -208,6 +208,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8b5538477c6b2fd408177cb1077f0a88, type: 2}
+    - target: {fileID: -6057140222963153312, guid: 3711a0b174e1e9d4fbdd36d505339815,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 48eda9a25fa94534abd30abcf71f5963, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3711a0b174e1e9d4fbdd36d505339815, type: 3}
 --- !u!1 &244994997
@@ -411,8 +416,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: IDLE
+  waypoint: {x: 0, y: 0, z: 0}
   movementSpeed: 12
   p: {fileID: 0}
+  wanderTime: 0
   maxWanderTime: 8
   wanderDistance: 5.5
   aggroDist: 5.5
@@ -1976,6 +1983,57 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 699735903545472785, guid: 358ec9fe8457bea42bc8883e99d51982, type: 3}
+--- !u!1 &1971297314 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 3711a0b174e1e9d4fbdd36d505339815,
+    type: 3}
+  m_PrefabInstance: {fileID: 4085549}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1971297315 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: 3711a0b174e1e9d4fbdd36d505339815,
+    type: 3}
+  m_PrefabInstance: {fileID: 4085549}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1971297317
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971297314}
+  serializedVersion: 2
+  m_Mass: 0.5
+  m_Drag: 10
+  m_AngularDrag: 36000
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 84
+  m_CollisionDetection: 0
+--- !u!114 &1971297318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971297314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b2ee43381562ba4a98254e1be09aa76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: IDLE
+  waypoint: {x: 0, y: 0, z: 0}
+  movementSpeed: 10
+  p: {fileID: 0}
+  wanderTime: 0
+  maxWanderTime: 8
+  wanderDistance: 5.5
+  aggroDist: 5.5
+  anim: {fileID: 1971297315}
+  turnRate: 10
+  spinTime: 0
 --- !u!1 &2138677391
 GameObject:
   m_ObjectHideFlags: 0
