@@ -13,6 +13,11 @@ public class Player : MonoBehaviour
 	public GameObject playerPhysics;
 	public PlayerUnit pu;
 
+	public GameObject sword;
+	public GameObject dagger;
+	public GameObject torch;
+	public GameObject torchLight;
+
 	private Vector3 moveDirection = Vector3.zero;
 	private Collisions playerCollisions;
 
@@ -24,6 +29,9 @@ public class Player : MonoBehaviour
 	
     void Update()
     {
+		if (pu.ItemSwitched())
+			EnableItem(pu.heldItem);
+
 		if (Input.GetKey(KeyCode.Mouse0))
 		{
 			ClickMove();
@@ -39,25 +47,25 @@ public class Player : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Mouse1))
 		{
-			if (pu.selectedItem == itemtype.sword)
+			if (pu.heldItem == ItemTypeEnums.values.sword)
 			{
 				anim.SetTrigger("Attack_Cut");
 			}
-			else if (pu.selectedItem == itemtype.dagger)
+			else if (pu.heldItem == ItemTypeEnums.values.dagger)
 			{
 				anim.SetTrigger("Attack_Stab");
 			}
 		}
 		if (Input.GetKey(KeyCode.Mouse1))
 		{
-			if (pu.selectedItem == itemtype.torch)
+			if (pu.heldItem == ItemTypeEnums.values.torch)
 			{
-				anim.SetFloat("TorchOut", 1);
+				anim.SetFloat("TorchOut", 1, 0.2f, Time.deltaTime);
 			}
 		}
-		else if (pu.selectedItem == itemtype.torch)
+		else if (pu.heldItem == ItemTypeEnums.values.torch)
 		{
-			anim.SetFloat("TorchOut", 0);
+			anim.SetFloat("TorchOut", 0, 0.2f, Time.deltaTime);
 		}
 
 		float spd = playerCollisions.GetSpeed();
@@ -114,5 +122,26 @@ public class Player : MonoBehaviour
 		right.Normalize();
 
 		moveDirection = x * right + z * forward;
+	}
+
+	void EnableItem(ItemTypeEnums.values typ)
+	{
+		sword.SetActive(false);
+		torch.SetActive(false);
+		dagger.SetActive(false);
+		torchLight.SetActive(false);
+		if (typ == ItemTypeEnums.values.sword)
+		{
+			sword.SetActive(true);
+		}
+		else if (typ == ItemTypeEnums.values.dagger)
+		{
+			dagger.SetActive(true);
+		}
+		else if (typ == ItemTypeEnums.values.torch)
+		{
+			torch.SetActive(true);
+			torchLight.SetActive(true);
+		}
 	}
 }

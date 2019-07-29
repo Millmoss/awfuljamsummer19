@@ -5,5 +5,5 @@ using UnityEngine;
 public class ItemTypeEnums
 {
     public enum values { head, chest, arms, legs, boots,
-        consumable, sword, dagger, cut, stab};
+        consumable, sword, dagger, cut, stab, torch};
 }
