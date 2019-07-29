@@ -17,6 +17,12 @@ public class Sneckenator : MonoBehaviour
     public Animator anim;
     public float turnRate;
     public float spinTime;
+	public Bitey bty;
+	public AudioSource noise;
+	public AudioSource foot;
+	public AudioSource bite;
+	public AudioSource die;
+	public float timtam = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -57,13 +63,20 @@ public class Sneckenator : MonoBehaviour
             if (wanderTime > maxWanderTime) {
                 NewWaypoint();
                 wanderTime = 0;
-            }
+			}
 
-            // Check that waypoint isn't too close to the player.
-            // If too close, make a new one with random changes to x and z.
+			timtam += Time.deltaTime;
+			if (timtam > .7f)
+			{
+				foot.Play();
+				timtam = 0;
+			}
 
-            // When moving, we don't want to be as urgent as if chasing the player.
-            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(waypoint.x, waypoint.z)) > 0.2f) {
+			// Check that waypoint isn't too close to the player.
+			// If too close, make a new one with random changes to x and z.
+
+			// When moving, we don't want to be as urgent as if chasing the player.
+			if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(waypoint.x, waypoint.z)) > 0.2f) {
                 currentSpeed = Mathf.Lerp(currentSpeed, movementSpeed / 3, movementSpeed / 3 * Time.deltaTime);
             } else {
                 // Come to a stop if close enough to the objective.
@@ -78,6 +91,13 @@ public class Sneckenator : MonoBehaviour
             wanderTime = wanderTime + Time.deltaTime;
             currentSpeed = Mathf.Lerp(currentSpeed, movementSpeed, movementSpeed * Time.deltaTime);
 
+			timtam += Time.deltaTime;
+			if (timtam > .7f)
+			{
+				foot.Play();
+				timtam = 0;
+			}
+
             // ==============================================================================================================================
             // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
@@ -85,8 +105,8 @@ public class Sneckenator : MonoBehaviour
             if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(waypoint.x, waypoint.z)) < 1) {
                 state = "ATTACK";
                 wanderTime = 0;
-                /// anim.Play("Bite");
-            }
+				anim.SetTrigger("Attack");
+			}
 
             // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             // ==============================================================================================================================
@@ -110,8 +130,12 @@ public class Sneckenator : MonoBehaviour
                 state = "AGGRO";
                 wanderTime = 0;
             }
-        }
-    }
+		}
+
+		if (Random.value < 0.001f && !noise.isPlaying)
+			noise.Play();
+		bty.SetState(state);
+	}
 
     private void FixedUpdate() {
 
@@ -160,5 +184,19 @@ public class Sneckenator : MonoBehaviour
             }
         }
         return;
-    }
+	}
+
+	public bool Attacking()
+	{
+		if (state == "ATTACK")
+			return true;
+
+		return false;
+	}
+
+	void OnTriggerEnter(Collider c)
+	{
+		if (c.tag == "Sword" || c.tag == "Torch" || c.tag == "Dagger")
+			return;
+	}
 }

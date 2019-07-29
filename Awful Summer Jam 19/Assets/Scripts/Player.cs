@@ -99,10 +99,10 @@ public class Player : MonoBehaviour
 		float dist = moveDirection.magnitude;
 		moveDirection.Normalize();
 
-		if (dist < slowDist)
-		{
-			moveDirection *= dist / slowDist;
-		}
+		//if (dist < slowDist)
+		//{
+		//	moveDirection *= dist / slowDist;
+		//}
 	}
 
 	void DirMove()
@@ -142,6 +142,28 @@ public class Player : MonoBehaviour
 		{
 			torch.SetActive(true);
 			torchLight.SetActive(true);
+		}
+	}
+
+	void OnTriggerEnter(Collider c)
+	{
+		if (c.tag == "Bite")
+		{
+			bool attacking = c.GetComponent<Bitey>().gOOOO;
+			if (attacking)
+			{
+				print("ouch owie");
+				return;     //cause damage
+			}
+		}
+		if (c.tag == "Fright")
+		{
+			bool attacking = c.GetComponent<Bitey>().gOOOO;
+			if (attacking)
+			{
+				print("ouch scary");
+				return;     //cause bleed
+			}
 		}
 	}
 }

@@ -17,9 +17,15 @@ public class Brogger : MonoBehaviour
     public Animator anim;
     public float turnRate;
     public float spinTime;
+	public Bitey bty;
+	public AudioSource noise;
+	public AudioSource foot;
+	public AudioSource bite;
+	public AudioSource die;
+	public float timtam = 0;
 
-    // Start is called before the first frame update
-    void Start() {
+	// Start is called before the first frame update
+	void Start() {
         state = "WANDER";
 
         home = transform.position;
@@ -70,13 +76,19 @@ public class Brogger : MonoBehaviour
             if(wanderTime > maxWanderTime) {
                 NewWaypoint();
                 wanderTime = 0;
-            }
+			}
+			timtam += Time.deltaTime;
+			if (timtam > .7f)
+			{
+				foot.Play();
+				timtam = 0;
+			}
 
-            // Check that waypoint isn't too close to the player.
-            // If too close, make a new one with random changes to x and z.
+			// Check that waypoint isn't too close to the player.
+			// If too close, make a new one with random changes to x and z.
 
-            // When moving, we don't want to be as urgent as if chasing the player.
-            if(Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(waypoint.x, waypoint.z)) > 0.2f) {
+			// When moving, we don't want to be as urgent as if chasing the player.
+			if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(waypoint.x, waypoint.z)) > 0.2f) {
                 currentSpeed = Mathf.Lerp(currentSpeed, movementSpeed / 3, movementSpeed / 3 * Time.deltaTime);
             } else {
                 // Come to a stop if close enough to the objective.
@@ -97,16 +109,22 @@ public class Brogger : MonoBehaviour
             if (Mathf.Abs(Quaternion.LookRotation(transform.forward, Vector3.up).eulerAngles.y - intention.eulerAngles.y) > 30 && wanderTime > 0.1f) {
                 state = "ORIENTATION";
                 wanderTime = 0;
-            }
+			}
+			timtam += Time.deltaTime;
+			if (timtam > .7f)
+			{
+				foot.Play();
+				timtam = 0;
+			}
 
-            // ==============================================================================================================================
-            // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-            
-            // If close enough, queue up an attack???
-            if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(waypoint.x, waypoint.z)) < 1) {
+			// ==============================================================================================================================
+			// vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+
+			// If close enough, queue up an attack???
+			if (Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(waypoint.x, waypoint.z)) < 1) {
                 state = "ATTACK";
                 wanderTime = 0;
-                /// anim.Play("Bite");
+				anim.SetTrigger("Attack");
             }
 
             // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -132,6 +150,10 @@ public class Brogger : MonoBehaviour
                 wanderTime = 0;
             }
         }
+
+		if (Random.value < 0.002f && !noise.isPlaying)
+			noise.Play();
+		bty.SetState(state);
     }
 
     private void FixedUpdate() {
@@ -189,4 +211,12 @@ public class Brogger : MonoBehaviour
         }
         return;
     }
+
+	public bool Attacking()
+	{
+		if (state == "ATTACK")
+			return true;
+
+		return false;
+	}
 }
