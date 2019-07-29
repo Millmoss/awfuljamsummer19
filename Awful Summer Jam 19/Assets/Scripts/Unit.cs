@@ -6,13 +6,26 @@ public class Unit : MonoBehaviour
 {
     public int atk, def, hp, mana;
     protected int max_hp;
-
+    
     public UIHP hp_bar;
+    public UIStatus[] ui_status;
+    protected UnitStatusEnums.UnitStatus status;
+    public Status[] statuses;
 
     public void Start()
     {
         hp_bar.Restart(hp);
         max_hp = hp;
+    }
+
+    public void SetStatus(UnitStatusEnums.UnitStatus st)
+    {
+        status = st;
+        //fix later ui_status.UpdateStatus(st);
+        if (st == UnitStatusEnums.UnitStatus.poisoned)
+            InvokeRepeating("TickPoison", 1, 1);
+        else
+            CancelInvoke();
     }
 
     //Return the calculated attack value
@@ -38,6 +51,13 @@ public class Unit : MonoBehaviour
         if (hp < 0)
             hp = 0;
         hp_bar.UpdateBar(hp);
+        if (hp == 0)
+            SetStatus(UnitStatusEnums.UnitStatus.dead);
+    }
+
+    private void TickPoison()
+    {
+        AddHp(-1);
     }
 
 }
