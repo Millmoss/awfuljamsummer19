@@ -82,6 +82,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
+<<<<<<< HEAD
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -112,6 +113,9 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 1
       loopBlend: 0
+=======
+      loopBlend: 1
+>>>>>>> 7aa880b3af2617f698b7dcd5b7a67f098e405936
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
