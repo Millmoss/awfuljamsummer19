@@ -23,29 +23,9 @@ public class Collisions : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		Ray floorRay = new Ray(transform.position, Vector3.down);
-		RaycastHit h;
-		bool success = Physics.Raycast(floorRay, out h, 2f, collisionMask);
-		if (success)
-		{
-			transform.position = h.point + Vector3.up;
-
-			floorRay = new Ray(transform.position + moveDirection * speed * 0.5f, Vector3.down);
-			success = Physics.Raycast(floorRay, out h, 2f, collisionMask);
-			if (success)
-			{
-				decelerate = false;
-			}
-			else
-			{
-				decelerate = true;
-			}
-		}
-
-		if (!decelerate)
-			playerBody.velocity = Vector3.Lerp(playerBody.velocity, moveDirection * speed, accel * Time.deltaTime * 60f);
-		else
-			playerBody.velocity = Vector3.Lerp(playerBody.velocity, Vector3.zero, accel * Time.deltaTime * 60f / 5f);
+		float y = playerBody.velocity.y;
+		playerBody.velocity = Vector3.Lerp(playerBody.velocity, moveDirection * speed, accel * Time.deltaTime * 60f);
+		playerBody.velocity = new Vector3(playerBody.velocity.x, y, playerBody.velocity.z);
 
 		currentSpeed = 0;
 

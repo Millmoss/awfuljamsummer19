@@ -12,9 +12,24 @@ public class Player : MonoBehaviour
 	public Animator anim;
 	public GameObject playerPhysics;
 	public PlayerUnit pu;
+	public Inventory iiiiii;
+
+	public GameObject sword;
+	public GameObject dagger;
+	public GameObject torch;
+	public GameObject torchLight;
+
+	public AudioSource a;
+	public AudioSource aa;
+	public AudioSource aaa;
+	public AudioSource aaaa;
 
 	private Vector3 moveDirection = Vector3.zero;
 	private Collisions playerCollisions;
+
+	public float timtam = 0;
+
+	public List<GameObject> aaaaaa;
 
     void Start()
     {
@@ -24,6 +39,19 @@ public class Player : MonoBehaviour
 	
     void Update()
     {
+		if (pu.hp <= 0)
+			aaa.Play();
+
+		
+		if (timtam > .7f && moveDirection != Vector3.zero)
+		{
+			timtam += Time.deltaTime;
+			a.Play();
+			timtam = 0;
+		}
+
+		EnableItem(iiiiii.cur_eapon_value);
+
 		if (Input.GetKey(KeyCode.Mouse0))
 		{
 			ClickMove();
@@ -39,25 +67,28 @@ public class Player : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Mouse1))
 		{
-			if (pu.selectedItem == PlayerUnit.itemtype.sword)
+			if (pu.heldItem == ItemTypeEnums.values.sword)
 			{
 				anim.SetTrigger("Attack_Cut");
+				aa.Play();
 			}
-			else if (pu.selectedItem == PlayerUnit.itemtype.dagger)
+			else if (pu.heldItem == ItemTypeEnums.values.dagger)
 			{
 				anim.SetTrigger("Attack_Stab");
+				aa.Play();
 			}
 		}
 		if (Input.GetKey(KeyCode.Mouse1))
 		{
-			if (pu.selectedItem == PlayerUnit.itemtype.torch)
+			if (pu.heldItem == ItemTypeEnums.values.torch)
 			{
-				anim.SetFloat("TorchOut", 1);
+				anim.SetFloat("TorchOut", 1, 0.2f, Time.deltaTime);
+				aa.Play();
 			}
 		}
-		else if (pu.selectedItem == PlayerUnit.itemtype.torch)
+		else if (pu.heldItem == ItemTypeEnums.values.torch)
 		{
-			anim.SetFloat("TorchOut", 0);
+			anim.SetFloat("TorchOut", 0, 0.2f, Time.deltaTime);
 		}
 
 		float spd = playerCollisions.GetSpeed();
@@ -91,10 +122,10 @@ public class Player : MonoBehaviour
 		float dist = moveDirection.magnitude;
 		moveDirection.Normalize();
 
-		if (dist < slowDist)
-		{
-			moveDirection *= dist / slowDist;
-		}
+		//if (dist < slowDist)
+		//{
+		//	moveDirection *= dist / slowDist;
+		//}
 	}
 
 	void DirMove()
@@ -114,5 +145,52 @@ public class Player : MonoBehaviour
 		right.Normalize();
 
 		moveDirection = x * right + z * forward;
+	}
+
+	void EnableItem(string typ)
+	{
+		sword.SetActive(false);
+		torch.SetActive(false);
+		dagger.SetActive(false);
+		torchLight.SetActive(false);
+		if (typ == "swd")
+		{
+			sword.SetActive(true);
+		}
+		else if (typ == "DAG")
+		{
+			dagger.SetActive(true);
+		}
+		else if (typ == "fir e")
+		{
+			torch.SetActive(true);
+			torchLight.SetActive(true);
+		}
+	}
+
+	void OnTriggerEnter(Collider c)
+	{
+		if (c.tag == "Bite")
+		{
+			bool attacking = c.GetComponent<Bitey>().gOOOO;
+			if (attacking)
+			{
+				print("ouch owie");
+				pu.Hurt(10);
+				aaaa.Play();
+				return;     //cause damage
+			}
+		}
+		if (c.tag == "Fright")
+		{
+			bool attacking = c.GetComponent<Bitey>().gOOOO;
+			if (attacking)
+			{
+				print("ouch scary");
+				pu.Hurt(5);
+				aaaa.Play();
+				return;     //cause bleed
+			}
+		}
 	}
 }

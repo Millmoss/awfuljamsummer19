@@ -9,9 +9,9 @@ public class PlayerUnit : Unit
     public Inventory inv;
     public int cur_wep_atk, max_mana;
     public Dictionary<ItemTypeEnums.values, Armor> equips;
-
-    public enum itemtype { sword, dagger, torch, none }
-    public itemtype selectedItem = itemtype.sword;
+	public bool itemWasSwitched = false;
+	
+    public ItemTypeEnums.values heldItem = ItemTypeEnums.values.sword;
 
     //if hp is 0, don't let it be 0 please.
     private new void Start()
@@ -102,4 +102,9 @@ public class PlayerUnit : Unit
         if (mana < 0)
             mana = 0;
     }
+
+	public bool ItemSwitched()    //this method returns if an item was switched this frame
+	{
+		return false;
+	}
 }
