@@ -102,14 +102,13 @@ public class Inventory : MonoBehaviour
 
     public void ToggleArmor()
     {
-        if (iv.CanEquip(cur_item_pos))
+        if(plyr.CanEquipArmor((Armor)cur_items[cur_item_pos]))
         {
-            iv.ToggleEquip(cur_item_pos);
+            print("put on");
+            iv.ToggleEquip(cur_item_pos, cur_items[cur_item_pos]);
             plyr.AddArmor((Armor)cur_items[cur_item_pos]);
             return;
         }
-        iv.ToggleEquip(cur_item_pos);
-        plyr.RemoveArmor((Armor)cur_items[cur_item_pos]);
             
     }
 

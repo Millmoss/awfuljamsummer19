@@ -8,7 +8,7 @@ public class PlayerUnit : Unit
     public UIBar mana_bar;
     public Inventory inv;
     public int cur_wep_atk, max_mana;
-    private Dictionary<ItemTypeEnums.values, Armor> equips;
+    public Dictionary<ItemTypeEnums.values, Armor> equips;
 
     public enum itemtype { sword, dagger, torch, none }
     public itemtype selectedItem = itemtype.sword;
@@ -41,8 +41,14 @@ public class PlayerUnit : Unit
 
     }
 
+    public bool CanEquipArmor(Armor a)
+    {
+        return (equips[a.type] == null);
+    }
+
     public void AddArmor(Armor a)
     {
+        print(a);
         if (equips.ContainsKey(a.type))
             if (equips[a.type] == null)
             {
@@ -95,19 +101,5 @@ public class PlayerUnit : Unit
             mana = max_mana;
         if (mana < 0)
             mana = 0;
-    }
-
-    private void Update()
-    { 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            AddHp(35);
-            print(hp);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            AddHp(-35);
-            print(hp);
-        }
     }
 }
