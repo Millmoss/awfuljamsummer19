@@ -9,13 +9,14 @@ public class Inventory : MonoBehaviour
     private int max_items = 10;
     private int cur_empty_slot = 0, cur_item_pos;
     private Item[] cur_items;
+    public string cur_eapon_value;
     private bool selected = false;
 
     private void Start()
     {
         max_items = iv.item_slots.Length;
         cur_items = new Item[max_items];
-
+        cur_eapon_value = "no";
     }
 
     //Done w movign l/r to iterate through items
@@ -60,6 +61,16 @@ public class Inventory : MonoBehaviour
                 return;
             switch(cur_items[cur_item_pos].type)
             {
+                case ItemTypeEnums.values.sword:
+                    cur_eapon_value = "swd";
+                    break;
+                case ItemTypeEnums.values.dagger:
+                    cur_eapon_value = "DAG";
+                    break;
+                case ItemTypeEnums.values.torch:
+                    cur_eapon_value = "fir e";
+                    break;
+
                 case ItemTypeEnums.values.consumable:
                     RemoveItem(cur_item_pos);
                     break;
