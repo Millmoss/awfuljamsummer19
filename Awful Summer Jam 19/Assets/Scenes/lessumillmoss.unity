@@ -3201,7 +3201,7 @@ PrefabInstance:
     - target: {fileID: 8018815995563172202, guid: c956a93fadbe06247881b032bc998f09,
         type: 3}
       propertyPath: weapons.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8018815995563172202, guid: c956a93fadbe06247881b032bc998f09,
         type: 3}
@@ -3248,6 +3248,12 @@ PrefabInstance:
       propertyPath: sprites.Array.data[0]
       value: 
       objectReference: {fileID: 21300000, guid: 36cb36d4a73426e4f8ba923622822637,
+        type: 3}
+    - target: {fileID: 8018815995563172202, guid: c956a93fadbe06247881b032bc998f09,
+        type: 3}
+      propertyPath: weapons.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 34293da9d7763684ea2954505732c4ae,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c956a93fadbe06247881b032bc998f09, type: 3}
