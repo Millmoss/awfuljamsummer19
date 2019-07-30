@@ -49,8 +49,6 @@ public class PlayerUnit : Unit
                 equips[a.type] = a;
                 def += a.armor_amount;
             }
-            else
-                print("alread have thigne quip");
     }
 
     public void RemoveArmor(Armor a)
@@ -60,7 +58,6 @@ public class PlayerUnit : Unit
             {
                 equips[a.type] = null;
                 def -= a.armor_amount;
-                inv.RemoveItem(a);
             }
     }
 
@@ -89,7 +86,7 @@ public class PlayerUnit : Unit
     //Return the calculated attack value
     public new int GetAttack()
     {
-        return cur_wep_atk +  atk;
+        return cur_wep_atk + atk;
     }
     public void AddMana(int val)
     {

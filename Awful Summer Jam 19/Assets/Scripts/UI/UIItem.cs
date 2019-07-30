@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class UIItem : MonoBehaviour
 {
+    public Inventory inv;
     public Image icon, dur, border;
     public int max_val = 60;
     private float cur_val;
@@ -72,6 +73,11 @@ public class UIItem : MonoBehaviour
             icon.color = Color.Lerp(init_col, 
                 Color.red, 
                 (1 - cur_val / max_val));
+        }
+        if(cur_val <0)
+        {
+            RemoveItem();
+            Start();
         }
     }
 }
