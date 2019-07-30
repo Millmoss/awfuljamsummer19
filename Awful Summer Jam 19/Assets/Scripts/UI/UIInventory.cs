@@ -16,16 +16,23 @@ public class UIInventory : MonoBehaviour
         item_slots[pos].RemoveItem();
     }
 
-    public bool ToggleEquip (int pos)
+    public bool CanEquip(int pos)
+    {
+        if (item_slots[pos].equipped == false)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void ToggleEquip (int pos)
     {
         if (item_slots[pos].equipped == false)
         { 
             item_slots[pos].EquipItem();
-            return true;
         }
         else
             item_slots[pos].UnequipItem();
-        return false;
     }
 
     //this is really really badly done, dont look at it!

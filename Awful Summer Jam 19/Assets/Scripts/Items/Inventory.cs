@@ -27,6 +27,8 @@ public class Inventory : MonoBehaviour
 
     public void MoveSelection(bool isLeft)
     {
+        if(!selected)
+            selected = true;
         if (!isLeft)
         { 
             if (cur_item_pos + 1 >= max_items)
@@ -100,10 +102,15 @@ public class Inventory : MonoBehaviour
 
     public void ToggleArmor()
     {
-        if (!iv.ToggleEquip(cur_item_pos))
+        if (iv.CanEquip(cur_item_pos))
+        {
+            iv.ToggleEquip(cur_item_pos);
             plyr.AddArmor((Armor)cur_items[cur_item_pos]);
-        else
-            plyr.RemoveArmor((Armor)cur_items[cur_item_pos]);
+            return;
+        }
+        iv.ToggleEquip(cur_item_pos);
+        plyr.RemoveArmor((Armor)cur_items[cur_item_pos]);
+            
     }
 
     public void RemoveItem(Item itm)

@@ -39,23 +39,23 @@ public class Player : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Mouse1))
 		{
-			if (pu.selectedItem == itemtype.sword)
+			if (pu.selectedItem == PlayerUnit.itemtype.sword)
 			{
 				anim.SetTrigger("Attack_Cut");
 			}
-			else if (pu.selectedItem == itemtype.dagger)
+			else if (pu.selectedItem == PlayerUnit.itemtype.dagger)
 			{
 				anim.SetTrigger("Attack_Stab");
 			}
 		}
 		if (Input.GetKey(KeyCode.Mouse1))
 		{
-			if (pu.selectedItem == itemtype.torch)
+			if (pu.selectedItem == PlayerUnit.itemtype.torch)
 			{
 				anim.SetFloat("TorchOut", 1);
 			}
 		}
-		else if (pu.selectedItem == itemtype.torch)
+		else if (pu.selectedItem == PlayerUnit.itemtype.torch)
 		{
 			anim.SetFloat("TorchOut", 0);
 		}

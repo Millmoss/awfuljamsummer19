@@ -1689,9 +1689,10 @@ MonoBehaviour:
   hp_bar: {fileID: 558356805359027570}
   ui_status: []
   mana_bar: {fileID: 558356804843942667}
-  inv: {fileID: 0}
+  inv: {fileID: 767547106}
   cur_wep_atk: 0
   max_mana: 0
+  selectedItem: 0
 --- !u!4 &767547103
 Transform:
   m_ObjectHideFlags: 0
@@ -1728,6 +1729,7 @@ MonoBehaviour:
   slowDist: 0.5
   anim: {fileID: 128516056}
   playerPhysics: {fileID: 0}
+  pu: {fileID: 0}
 --- !u!54 &767547105
 Rigidbody:
   m_ObjectHideFlags: 0
