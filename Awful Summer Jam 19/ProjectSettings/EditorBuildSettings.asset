@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/millmoss.unity
     guid: d46c776b06eea8248a77c79810b533bd
+  - enabled: 1
+    path: Assets/Scenes/THATSIT.unity
+    guid: 38c00c14c90a22142a0fcb120adafd26
+  - enabled: 1
+    path: Assets/Scenes/THATSNOTIT.unity
+    guid: 5c1be41ad038fa34192ef4be1e0ccc94
   m_configObjects: {}
