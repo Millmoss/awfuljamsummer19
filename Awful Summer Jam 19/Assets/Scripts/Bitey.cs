@@ -27,7 +27,7 @@ public class Bitey : MonoBehaviour
 		if (state == prevstate && prevstate)
 		{
 			t += Time.deltaTime;
-			if (t > 0.5f)
+			if (t > 1f)
 			{
 				gOOOO = true;
 			}

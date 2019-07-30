@@ -105,7 +105,7 @@ public class Brogger : MonoBehaviour
             Quaternion intention = Quaternion.LookRotation(waypoint - transform.position, Vector3.up);
             intention = Quaternion.Euler(new Vector3(0, intention.eulerAngles.y, 0));
             // Quaternion.LookRotation(player.position - cam.transform.position, Vector3.up).eulerAngles;
-            Debug.Log(Quaternion.LookRotation(transform.forward, Vector3.up).eulerAngles.y - intention.eulerAngles.y);
+            //Debug.Log(Quaternion.LookRotation(transform.forward, Vector3.up).eulerAngles.y - intention.eulerAngles.y);
             if (Mathf.Abs(Quaternion.LookRotation(transform.forward, Vector3.up).eulerAngles.y - intention.eulerAngles.y) > 30 && wanderTime > 0.1f) {
                 state = "ORIENTATION";
                 wanderTime = 0;

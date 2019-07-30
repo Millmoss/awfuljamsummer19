@@ -99,16 +99,7 @@ public class PlayerUnit : Unit
 
     private void Update()
     { 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            AddHp(35);
-            print(hp);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            AddHp(-35);
-            print(hp);
-        }
+        
     }
 
 	public bool ItemSwitched()    //this method returns if an item was switched this frame

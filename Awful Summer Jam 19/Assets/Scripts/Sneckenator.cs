@@ -196,7 +196,7 @@ public class Sneckenator : MonoBehaviour
 
 	void OnTriggerEnter(Collider c)
 	{
-		if (c.tag == "Sword" || c.tag == "Torch" || c.tag == "Dagger")
+		if (c.tag == "Weapon")
 			return;
 	}
 }

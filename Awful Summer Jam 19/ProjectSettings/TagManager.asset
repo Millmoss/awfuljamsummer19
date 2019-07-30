@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Bite
   - Fright
+  - Weapon
   layers:
   - Default
   - TransparentFX

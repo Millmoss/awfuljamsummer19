@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
 	private Vector3 moveDirection = Vector3.zero;
 	private Collisions playerCollisions;
 
+	public List<GameObject> aaaaaa;
+
     void Start()
     {
 		playerCollisions = playerPhysics.GetComponent<Collisions>();
@@ -47,39 +49,27 @@ public class Player : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.Mouse1))
 		{
-<<<<<<< HEAD
 			if (pu.heldItem == ItemTypeEnums.values.sword)
 			{
 				anim.SetTrigger("Attack_Cut");
 			}
 			else if (pu.heldItem == ItemTypeEnums.values.dagger)
-=======
-			if (pu.selectedItem == PlayerUnit.itemtype.sword)
 			{
 				anim.SetTrigger("Attack_Cut");
 			}
-			else if (pu.selectedItem == PlayerUnit.itemtype.dagger)
->>>>>>> 67f42a404fceaaf1f084a458573de54c9d4b8226
+			else if (pu.heldItem == ItemTypeEnums.values.dagger)
 			{
 				anim.SetTrigger("Attack_Stab");
 			}
 		}
 		if (Input.GetKey(KeyCode.Mouse1))
 		{
-<<<<<<< HEAD
 			if (pu.heldItem == ItemTypeEnums.values.torch)
-=======
-			if (pu.selectedItem == PlayerUnit.itemtype.torch)
->>>>>>> 67f42a404fceaaf1f084a458573de54c9d4b8226
 			{
 				anim.SetFloat("TorchOut", 1, 0.2f, Time.deltaTime);
 			}
 		}
-<<<<<<< HEAD
 		else if (pu.heldItem == ItemTypeEnums.values.torch)
-=======
-		else if (pu.selectedItem == PlayerUnit.itemtype.torch)
->>>>>>> 67f42a404fceaaf1f084a458573de54c9d4b8226
 		{
 			anim.SetFloat("TorchOut", 0, 0.2f, Time.deltaTime);
 		}
@@ -169,6 +159,7 @@ public class Player : MonoBehaviour
 			if (attacking)
 			{
 				print("ouch owie");
+				pu.Hurt(10);
 				return;     //cause damage
 			}
 		}
@@ -178,6 +169,7 @@ public class Player : MonoBehaviour
 			if (attacking)
 			{
 				print("ouch scary");
+				pu.Hurt(5);
 				return;     //cause bleed
 			}
 		}
