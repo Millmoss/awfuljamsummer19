@@ -18,7 +18,7 @@ public class Inventory : MonoBehaviour
         max_items = iv.item_slots.Length;
         cur_items = new Item[max_items];
         ce = new GameObject[max_items];
-        cur_eapon_value = "no";
+        cur_eapon_value = "swd";
     }
 
     //Done w movign l/r to iterate through items
