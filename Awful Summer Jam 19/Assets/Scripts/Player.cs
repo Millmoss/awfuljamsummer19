@@ -12,14 +12,22 @@ public class Player : MonoBehaviour
 	public Animator anim;
 	public GameObject playerPhysics;
 	public PlayerUnit pu;
+	public Inventory iiiiii;
 
 	public GameObject sword;
 	public GameObject dagger;
 	public GameObject torch;
 	public GameObject torchLight;
 
+	public AudioSource a;
+	public AudioSource aa;
+	public AudioSource aaa;
+	public AudioSource aaaa;
+
 	private Vector3 moveDirection = Vector3.zero;
 	private Collisions playerCollisions;
+
+	public float timtam = 0;
 
 	public List<GameObject> aaaaaa;
 
@@ -31,8 +39,18 @@ public class Player : MonoBehaviour
 	
     void Update()
     {
-		if (pu.ItemSwitched())
-			EnableItem(pu.heldItem);
+		if (pu.hp <= 0)
+			aaa.Play();
+
+		
+		if (timtam > .7f && moveDirection != Vector3.zero)
+		{
+			timtam += Time.deltaTime;
+			a.Play();
+			timtam = 0;
+		}
+
+		EnableItem(iiiiii.cur_eapon_value);
 
 		if (Input.GetKey(KeyCode.Mouse0))
 		{
@@ -52,14 +70,12 @@ public class Player : MonoBehaviour
 			if (pu.heldItem == ItemTypeEnums.values.sword)
 			{
 				anim.SetTrigger("Attack_Cut");
-			}
-			else if (pu.heldItem == ItemTypeEnums.values.dagger)
-			{
-				anim.SetTrigger("Attack_Cut");
+				aa.Play();
 			}
 			else if (pu.heldItem == ItemTypeEnums.values.dagger)
 			{
 				anim.SetTrigger("Attack_Stab");
+				aa.Play();
 			}
 		}
 		if (Input.GetKey(KeyCode.Mouse1))
@@ -67,6 +83,7 @@ public class Player : MonoBehaviour
 			if (pu.heldItem == ItemTypeEnums.values.torch)
 			{
 				anim.SetFloat("TorchOut", 1, 0.2f, Time.deltaTime);
+				aa.Play();
 			}
 		}
 		else if (pu.heldItem == ItemTypeEnums.values.torch)
@@ -130,21 +147,21 @@ public class Player : MonoBehaviour
 		moveDirection = x * right + z * forward;
 	}
 
-	void EnableItem(ItemTypeEnums.values typ)
+	void EnableItem(string typ)
 	{
 		sword.SetActive(false);
 		torch.SetActive(false);
 		dagger.SetActive(false);
 		torchLight.SetActive(false);
-		if (typ == ItemTypeEnums.values.sword)
+		if (typ == "swd")
 		{
 			sword.SetActive(true);
 		}
-		else if (typ == ItemTypeEnums.values.dagger)
+		else if (typ == "DAG")
 		{
 			dagger.SetActive(true);
 		}
-		else if (typ == ItemTypeEnums.values.torch)
+		else if (typ == "fir e")
 		{
 			torch.SetActive(true);
 			torchLight.SetActive(true);
@@ -160,6 +177,7 @@ public class Player : MonoBehaviour
 			{
 				print("ouch owie");
 				pu.Hurt(10);
+				aaaa.Play();
 				return;     //cause damage
 			}
 		}
@@ -170,6 +188,7 @@ public class Player : MonoBehaviour
 			{
 				print("ouch scary");
 				pu.Hurt(5);
+				aaaa.Play();
 				return;     //cause bleed
 			}
 		}
