@@ -8,10 +8,17 @@ public class PlayerUnit : Unit
     public UIBar mana_bar;
     public Inventory inv;
     public int cur_wep_atk, max_mana;
+<<<<<<< HEAD
     private Dictionary<ItemTypeEnums.values, Armor> equips;
 	public bool itemWasSwitched = false;
 	
     public ItemTypeEnums.values heldItem = ItemTypeEnums.values.sword;
+=======
+    public Dictionary<ItemTypeEnums.values, Armor> equips;
+
+    public enum itemtype { sword, dagger, torch, none }
+    public itemtype selectedItem = itemtype.sword;
+>>>>>>> d3ba3620f737e5095306117904bfebf6c4cc045f
 
     //if hp is 0, don't let it be 0 please.
     private new void Start()
@@ -41,8 +48,14 @@ public class PlayerUnit : Unit
 
     }
 
+    public bool CanEquipArmor(Armor a)
+    {
+        return (equips[a.type] == null);
+    }
+
     public void AddArmor(Armor a)
     {
+        print(a);
         if (equips.ContainsKey(a.type))
             if (equips[a.type] == null)
             {
@@ -96,6 +109,7 @@ public class PlayerUnit : Unit
         if (mana < 0)
             mana = 0;
     }
+<<<<<<< HEAD
 
     private void Update()
     { 
@@ -106,4 +120,6 @@ public class PlayerUnit : Unit
 	{
 		return false;
 	}
+=======
+>>>>>>> d3ba3620f737e5095306117904bfebf6c4cc045f
 }

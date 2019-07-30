@@ -25,11 +25,11 @@ public class UIInventory : MonoBehaviour
         return false;
     }
 
-    public void ToggleEquip (int pos)
+    public void ToggleEquip (int pos, Item i)
     {
         if (item_slots[pos].equipped == false)
         { 
-            item_slots[pos].EquipItem();
+            item_slots[pos].EquipItem(i.type);
         }
         else
             item_slots[pos].UnequipItem();
