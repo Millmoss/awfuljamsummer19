@@ -1760,6 +1760,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iv: {fileID: 558356805496109746}
   plyr: {fileID: 767547102}
+  cur_eapon_value: 
 --- !u!1 &778654221
 GameObject:
   m_ObjectHideFlags: 0
@@ -3209,6 +3210,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8018815995563172202, guid: c956a93fadbe06247881b032bc998f09,
         type: 3}
+      propertyPath: objs.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8018815995563172202, guid: c956a93fadbe06247881b032bc998f09,
+        type: 3}
       propertyPath: weapons.Array.data[0]
       value: 
       objectReference: {fileID: 21300000, guid: 67a7eb069eed2d54589a285ac1e52dfb,
@@ -3217,25 +3223,31 @@ PrefabInstance:
         type: 3}
       propertyPath: sprites.Array.data[1]
       value: 
-      objectReference: {fileID: 21300000, guid: c9c9a55e22550c84882c882b7e106ce4,
+      objectReference: {fileID: 21300000, guid: 9e4e1d1e26c90c740b7e723a6e6f61a9,
         type: 3}
     - target: {fileID: 8018815995563172202, guid: c956a93fadbe06247881b032bc998f09,
         type: 3}
       propertyPath: sprites.Array.data[2]
       value: 
-      objectReference: {fileID: 21300000, guid: c9c9a55e22550c84882c882b7e106ce4,
+      objectReference: {fileID: 21300000, guid: 6f831d0c5dedfbc4b9d1ab08b89c062e,
         type: 3}
     - target: {fileID: 8018815995563172202, guid: c956a93fadbe06247881b032bc998f09,
         type: 3}
       propertyPath: sprites.Array.data[3]
       value: 
-      objectReference: {fileID: 21300000, guid: c9c9a55e22550c84882c882b7e106ce4,
+      objectReference: {fileID: 21300000, guid: 5835352168e552e4db0a3ba24f2edddb,
         type: 3}
     - target: {fileID: 8018815995563172202, guid: c956a93fadbe06247881b032bc998f09,
         type: 3}
       propertyPath: sprites.Array.data[4]
       value: 
-      objectReference: {fileID: 21300000, guid: c9c9a55e22550c84882c882b7e106ce4,
+      objectReference: {fileID: 21300000, guid: 8249684dc434e7342a40c7f4b96b1be0,
+        type: 3}
+    - target: {fileID: 8018815995563172202, guid: c956a93fadbe06247881b032bc998f09,
+        type: 3}
+      propertyPath: sprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 36cb36d4a73426e4f8ba923622822637,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c956a93fadbe06247881b032bc998f09, type: 3}

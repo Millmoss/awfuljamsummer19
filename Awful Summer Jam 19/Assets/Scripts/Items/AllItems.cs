@@ -9,30 +9,27 @@ public class AllItems : MonoBehaviour
 
     public Dictionary<int, Item> items;
     public Sprite[] sprites;
+    public GameObject[] objs;
     public Sprite[] weapons;
 
     public void InstantiateValues()
     {
         items = new Dictionary<int, Item>();
         Item tmp;
-        tmp = new Armor(sprites[0], "head", ItemTypeEnums.values.head, 1);
+        tmp = new Armor(sprites[0], "head", ItemTypeEnums.values.head, 1, objs[0]);
         items[0] = tmp;
-        tmp = new Armor(sprites[1], "ar", ItemTypeEnums.values.arms, 2);
+        tmp = new Armor(sprites[1], "shirt", ItemTypeEnums.values.arms, 2, objs[1]);
         items[1] = tmp;
-        tmp = new Armor(sprites[2], "lweg", ItemTypeEnums.values.legs, 3);
+        tmp = new Armor(sprites[2], "chest", ItemTypeEnums.values.legs, 3, objs[2]);
         items[2] = tmp;
-        tmp = new Armor(sprites[3], "che", ItemTypeEnums.values.chest,4);
+        tmp = new Armor(sprites[3], "pants", ItemTypeEnums.values.chest,4, objs[3]);
         items[3] = tmp;
-        tmp = new Armor(sprites[4], "boot", ItemTypeEnums.values.boots,5);
+        tmp = new Armor(sprites[4], "shoulderguard", ItemTypeEnums.values.boots,5, objs[4]);
         items[4] = tmp;
-        /*
-        for (int i = 0; i < sprites.Length; i++)
-        {
-            tmp = new Item(sprites[i], i.ToString(),ItemTypeEnums.values.arms);
-            items[i] = tmp;
-        }
-        tmp = new Item_Weapon(weapons[0], "Sword", ItemTypeEnums.values.cut);
-        */
+        
+        tmp = new Item(weapons[0], "Sword", ItemTypeEnums.values.sword, null);
+        tmp = new Item(weapons[1], "Sword", ItemTypeEnums.values.dagger, null);
+        
     }
 
     public static AllItems Instance

@@ -9,6 +9,7 @@ public class Inventory : MonoBehaviour
     private int max_items = 10;
     private int cur_empty_slot = 0, cur_item_pos;
     private Item[] cur_items;
+    private GameObject[] ce;
     public string cur_eapon_value;
     private bool selected = false;
 
@@ -16,6 +17,7 @@ public class Inventory : MonoBehaviour
     {
         max_items = iv.item_slots.Length;
         cur_items = new Item[max_items];
+        ce = new GameObject[max_items];
         cur_eapon_value = "no";
     }
 
@@ -129,6 +131,8 @@ public class Inventory : MonoBehaviour
             if(cur_items[i] == itm)
             {
                 RemoveItem(i);
+                if(ce[i])
+                    Destroy(ce[i]);
                 return;
             }
         print("ERROR: Attmpeted removed item not found in inventory!");
@@ -136,12 +140,13 @@ public class Inventory : MonoBehaviour
 
     //TODOO: Fix so when an item is removed in the middle of the
     //inventory stack it doesn't fuck EVERYHTING.
-    public void AddItem(Item itm)
+    public void AddItem(Item itm, GameObject o)
     {
         if (cur_empty_slot < max_items)
         {
             iv.AddItem(itm, cur_empty_slot);
             cur_items[cur_empty_slot] = itm;
+            ce[cur_empty_slot] = o;
             bool changed = false;
             for (int i = 0; i < cur_items.Length; i++)
             {

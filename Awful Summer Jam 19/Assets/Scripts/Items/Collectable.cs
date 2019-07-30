@@ -15,8 +15,5 @@ public class Collectable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //TOOD: put this in a collision.
-        if (Input.GetKeyDown(KeyCode.N))
-            iv.AddItem(it);
     }
 }
